@@ -13,17 +13,54 @@ function CreateUser(){
     })
 
     const handleCreateUser = async () => {
-        console.log('Creando usuario...', newUser);
-        fetch('https://fakestoreapi.com/users',{
+
+        if (newUser.name='' || newUser.name === null){
+            alert('El nombre es obligatorio');
+            return;
+        }
+        
+        if (newUser.email='' || newUser.email === null){
+            alert('El email es obligatorio');
+            return;
+        }
+
+        if (newUser.password='' || newUser.password === null){
+            alert('La contraseña es obligatoria');
+            return;
+        }
+                    
+
+        try{
+            console.log('Creando usuario...', newUser);
+        const response = await fetch('https://fakestoreapi.com/users',{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(newUser)
         })
-        .then(res => res.json())
-        .then(json => console.log(json))
+        console.log('Respuesta del servidor:', response);
+
+        const data = await response.json();
+        console.log('Datos del nuevo usuario creado:', data);
+
+        if(!response.ok){
+            const error = new Error('Error al crear el usuario');
+            error.status = response.status;
+            error.statusText = data.message
+            throw error;                                       
+        
+        }
+
+
+        }catch(error){
+            console.error('Error al crear el usuario:', error);
+            alert(`Error ${error.status}: ${error.statusText}`)         
+        }
+        
+
     }
+
 
     return(
         <>
