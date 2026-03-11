@@ -1,9 +1,12 @@
 import { useState } from "react";
 import CustomInput from "../components/CustomInput";
 import CustomButton from "../components/CustomButton";
+import { useNavigate } from "react-router-dom";
 
 
 function CreateUser(){
+
+    const navigate = useNavigate();
 
     const [newUser, setNewUser] = useState({
         id: '',
@@ -28,7 +31,7 @@ function CreateUser(){
             alert('La contraseña es obligatoria');
             return;
         }
-                    
+
 
         try{
             console.log('Creando usuario...', newUser);
@@ -52,9 +55,11 @@ function CreateUser(){
         
         }
 
+        navigate('/');
+
 
         }catch(error){
-            console.error('Error al crear el usuario:', error);
+            console.log('Error al crear el usuario:', error.status, error.statusText        );
             alert(`Error ${error.status}: ${error.statusText}`)         
         }
         
