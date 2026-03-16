@@ -1,11 +1,9 @@
 
 function CustomButton({children, action}) {
   return (
-
-    <button onClick={action}>
+    <button className="app-button" onClick={action} type="button">
         {children}
     </button>
-    
   );
 }
 
